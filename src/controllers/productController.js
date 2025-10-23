@@ -1,6 +1,10 @@
 const Product = require('../models/productModel');
 const SupplyDetails = require('../models/supplyDetailsModel');
 const SaleDetails = require('../models/saleDetailsModel');
+const Supply = require('../models/supplyModel');
+const Supplier = require('../models/supplierModel');
+const SupplierAddress = require('../models/supplierAddressModel');
+const SupplierContact = require('../models/supplierContactModel');
 
 exports.getProductQuantityOnHand = async (req, res) => {
     try {
