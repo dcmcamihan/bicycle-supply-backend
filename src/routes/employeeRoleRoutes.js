@@ -3,6 +3,7 @@ const router = express.Router();
 const employeeRoleController = require('../controllers/employeeRoleController');
 
 router.get('/', employeeRoleController.getAllEmployeeRoles);
+router.get('/employee/:employeeId', employeeRoleController.getRolesByEmployeeId);
 router.get('/:id', employeeRoleController.getEmployeeRoleById);
 router.post('/', employeeRoleController.createEmployeeRole);
 router.put('/:id', employeeRoleController.updateEmployeeRole);

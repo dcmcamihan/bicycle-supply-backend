@@ -10,6 +10,25 @@ exports.getAllEmployees = async (req, res) => {
     }
 };
 
+// Re-hash any employee records that still have plaintext passwords
+exports.rehashPlaintextPasswords = async (req, res) => {
+    try {
+        const employees = await Employee.findAll();
+        let updatedCount = 0;
+        for (const emp of employees) {
+            const pwd = String(emp.password || '');
+            if (!pwd.startsWith('$2a$') && !pwd.startsWith('$2b$')) {
+                const hashed = await bcrypt.hash(pwd, 10);
+                await Employee.update({ password: hashed }, { where: { employee_id: emp.employee_id } });
+                updatedCount++;
+            }
+        }
+        res.json({ updated: updatedCount });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getEmployeeById = async (req, res) => {
     try {
         const employee = await Employee.findByPk(req.params.id);

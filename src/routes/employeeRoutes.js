@@ -8,6 +8,7 @@ router.post('/', employeeController.createEmployee);
 router.put('/:id', employeeController.updateEmployee);
 router.delete('/:id', employeeController.deleteEmployee);
 router.post('/login', employeeController.findEmployeeByUsernameAndPassword);
-router.post('/validate-session', employeeController.validateSession); // Add this line
+router.post('/validate-session', employeeController.validateSession); 
+router.post('/rehash-passwords', employeeController.rehashPlaintextPasswords);
 
 module.exports = router;

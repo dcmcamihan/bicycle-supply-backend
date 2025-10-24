@@ -9,6 +9,16 @@ exports.getAllEmployeeRoles = async (req, res) => {
     }
 };
 
+exports.getRolesByEmployeeId = async (req, res) => {
+    try {
+        const { employeeId } = req.params;
+        const roles = await EmployeeRole.findAll({ where: { employee_id: employeeId } });
+        res.json(roles);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getEmployeeRoleById = async (req, res) => {
     try {
         const employeeRole = await EmployeeRole.findByPk(req.params.id);
