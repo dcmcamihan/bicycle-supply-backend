@@ -29,9 +29,43 @@ exports.getProductQuantityOnHand = async (req, res) => {
     }
 };
 
+exports.archiveProduct = async (req, res) => {
+    try {
+        const [updated] = await Product.update({ is_active: false }, {
+            where: { product_id: req.params.id }
+        });
+        if (updated) {
+            const product = await Product.findByPk(req.params.id);
+            res.json(product);
+        } else {
+            res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.activateProduct = async (req, res) => {
+    try {
+        const [updated] = await Product.update({ is_active: true }, {
+            where: { product_id: req.params.id }
+        });
+        if (updated) {
+            const product = await Product.findByPk(req.params.id);
+            res.json(product);
+        } else {
+            res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+        const includeInactive = String(req.query.includeInactive || 'false').toLowerCase() === 'true';
+        const where = includeInactive ? {} : { is_active: true };
+        const products = await Product.findAll({ where });
         res.json(products);
     } catch (error) {
         res.status(500).json({ error: error.message });
