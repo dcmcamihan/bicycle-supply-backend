@@ -7,5 +7,7 @@ router.get('/:id', returnAndReplacementController.getReturnAndReplacementById);
 router.post('/', returnAndReplacementController.createReturnAndReplacement);
 router.put('/:id', returnAndReplacementController.updateReturnAndReplacement);
 router.delete('/:id', returnAndReplacementController.deleteReturnAndReplacement);
+router.post('/:id/approve', returnAndReplacementController.approveReturn);
+router.post('/:id/post', returnAndReplacementController.postReturn);
 
 module.exports = router;

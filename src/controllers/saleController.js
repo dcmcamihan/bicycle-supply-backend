@@ -2,8 +2,18 @@ const Sale = require('../models/saleModel');
 
 exports.getAllSales = async (req, res) => {
     try {
-        const sales = await Sale.findAll();
-        res.json(sales);
+        const paged = req.query.page || req.query.pageSize;
+        const where = {};
+        if (req.query.status) where.status = req.query.status;
+        if (!paged) {
+            const sales = await Sale.findAll({ where, order: [['sale_id','DESC']] });
+            return res.json(sales);
+        }
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const pageSize = Math.min(100, Math.max(1, parseInt(req.query.pageSize) || 20));
+        const offset = (page - 1) * pageSize;
+        const { rows, count } = await Sale.findAndCountAll({ where, limit: pageSize, offset, order: [['sale_id','DESC']] });
+        res.json({ page, pageSize, total: count, data: rows });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -57,6 +67,20 @@ exports.deleteSale = async (req, res) => {
         } else {
             res.status(404).json({ message: 'Sale not found' });
         }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Mark a sale as Completed
+exports.completeSale = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const sale = await Sale.findByPk(id);
+        if (!sale) return res.status(404).json({ message: 'Sale not found' });
+        await Sale.update({ status: 'Completed' }, { where: { sale_id: id } });
+        const updated = await Sale.findByPk(id);
+        res.json(updated);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

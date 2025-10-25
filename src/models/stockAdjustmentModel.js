@@ -7,6 +7,11 @@ const StockAdjustment = sequelize.define('StockAdjustment', {
     autoIncrement: true,
     primaryKey: true,
   },
+  client_request_id: {
+    type: DataTypes.STRING(64),
+    allowNull: true,
+    unique: true,
+  },
   return_id: {
     type: DataTypes.INTEGER,
     allowNull: true,

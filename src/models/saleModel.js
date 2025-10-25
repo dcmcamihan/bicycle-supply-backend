@@ -34,6 +34,11 @@ const Sale = sequelize.define('Sale', {
             model: 'employee',
             key: 'employee_id'
         }
+    },
+    status: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: 'Pending'
     }
 }, {
     tableName: 'sale',

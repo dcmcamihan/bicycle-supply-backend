@@ -15,6 +15,11 @@ const ReturnAndReplacement = sequelize.define('ReturnAndReplacement', {
             key: 'sale_detail_id'
         }
     },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     return_status: {
         type: DataTypes.CHAR(4),
         allowNull: false,
@@ -31,6 +36,11 @@ const ReturnAndReplacement = sequelize.define('ReturnAndReplacement', {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null
+    },
+    replacement_product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: { model: 'product', key: 'product_id' }
     }
 }, {
     tableName: 'return_and_replacement',
