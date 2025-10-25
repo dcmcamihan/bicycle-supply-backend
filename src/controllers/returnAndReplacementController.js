@@ -71,7 +71,8 @@ exports.approveReturn = async (req, res) => {
         const id = req.params.id;
         const row = await ReturnAndReplacement.findByPk(id);
         if (!row) return res.status(404).json({ message: 'Return not found' });
-        await ReturnAndReplacement.update({ return_status: 'APPR' }, { where: { return_id: id } });
+        // Use numeric Sales Return Status code for Approved
+        await ReturnAndReplacement.update({ return_status: '2002' }, { where: { return_id: id } });
         const updated = await ReturnAndReplacement.findByPk(id);
         res.json(updated);
     } catch (error) {
@@ -111,7 +112,8 @@ exports.postReturn = async (req, res) => {
         }, { transaction: t });
         const rows = details.map(d => ({ adjustment_id: header.adjustment_id, product_id: d.product_id, quantity: d.quantity }));
         await StockAdjustmentDetail.bulkCreate(rows, { transaction: t });
-        await ReturnAndReplacement.update({ return_status: 'POST' }, { where: { return_id: id }, transaction: t });
+        // Use numeric Sales Return Status code for Completed
+        await ReturnAndReplacement.update({ return_status: '2009' }, { where: { return_id: id }, transaction: t });
         await t.commit();
         res.json({ ...header.toJSON(), details: rows });
     } catch (error) {
