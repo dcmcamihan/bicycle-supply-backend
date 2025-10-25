@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: dbbicycle_supply
 -- ------------------------------------------------------
--- Server version	9.4.0
+-- Server version	8.4.6
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -131,7 +131,7 @@ CREATE TABLE `customer` (
   `middle_name` varchar(60) DEFAULT NULL,
   `gender` char(1) DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'Juan','Dela Cruz','Santos','M'),(2,'Maria','Reyes','Lourdes','F'),(3,'Ricardo','Bautista','Mendoza','M'),(4,'Angela','Garcia','Dimaculangan','F'),(5,'Mark','Santiago','Villanueva','M'),(6,'Camille','Ramos','Dizon','F'),(7,'Jonathan','Cruz','Ramos','M'),(8,'Patricia','Villanueva','Reyes','F'),(9,'Gabriel','Mendoza','Fernandez','M'),(10,'Kristine','Aquino','Soriano','F'),(11,'Michael','Santos','David','M'),(12,'Anne','Gonzales','Francisco','F'),(13,'Joseph','Soriano','Cruz','M'),(14,'Charlene','Pineda','Valenzuela','F'),(15,'Benedict','Ocampo','De Leon','M'),(16,'Alyssa','Navarro','Hernandez','F'),(17,'Patrick','Tan','Ong','M'),(18,'Jennifer','Lim','Go','F'),(19,'Carlo','De Guzman','Manalo','M'),(20,'Sofia','Evangelista','Cruz','F'),(21,'test','test','test','F'),(22,'Ambot','Langaw','Sa','M'),(23,'Angelo','Cruz',NULL,NULL),(24,'Julian','Tolentino',NULL,NULL),(25,'Migs','Fuentes',NULL,NULL),(26,'Christian','Ong',NULL,NULL),(27,'Ken','Pangilinan',NULL,NULL),(28,'Herra','Cruz',NULL,NULL),(29,'Anna','Reyes',NULL,NULL),(30,'Kurt','Santos',NULL,NULL),(31,'Kim','Rodriguez',NULL,NULL),(32,'Russel','Gomez',NULL,NULL);
+INSERT INTO `customer` VALUES (1,'Juan','Dela Cruz','Santos','M'),(2,'Maria','Reyes','Lourdes','F'),(3,'Ricardo','Bautista','Mendoza','M'),(4,'Angela','Garcia','Dimaculangan','F'),(5,'Mark','Santiago','Villanueva','M'),(6,'Camille','Ramos','Dizon','F'),(7,'Jonathan','Cruz','Ramos','M'),(8,'Patricia','Villanueva','Reyes','F'),(9,'Gabriel','Mendoza','Fernandez','M'),(10,'Kristine','Aquino','Soriano','F'),(11,'Michael','Santos','David','M'),(12,'Anne','Gonzales','Francisco','F'),(13,'Joseph','Soriano','Cruz','M'),(14,'Charlene','Pineda','Valenzuela','F'),(15,'Benedict','Ocampo','De Leon','M'),(16,'Alyssa','Navarro','Hernandez','F'),(17,'Patrick','Tan','Ong','M'),(18,'Jennifer','Lim','Go','F'),(19,'Carlo','De Guzman','Manalo','M'),(20,'Sofia','Evangelista','Cruz','F'),(21,'test','test','test','F'),(22,'Ambot','Langaw','Sa','M'),(23,'Angelo','Cruz',NULL,NULL),(24,'Julian','Tolentino',NULL,NULL),(25,'Migs','Fuentes',NULL,NULL),(26,'Christian','Ong',NULL,NULL),(27,'Ken','Pangilinan',NULL,NULL),(28,'Herra','Cruz',NULL,NULL),(29,'Anna','Reyes',NULL,NULL),(30,'Kurt','Santos',NULL,NULL),(31,'Kim','Rodriguez',NULL,NULL),(32,'Russel','Gomez',NULL,NULL),(33,'George','Ong',NULL,NULL),(34,'Carlo','Mendoza',NULL,NULL),(35,'Patrick','Navarro',NULL,NULL),(36,'Kevin','Soriano',NULL,NULL),(37,'Joanna','Lim',NULL,NULL),(38,'Denise','Gonzales',NULL,NULL);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,12 +372,13 @@ CREATE TABLE `product` (
   `price` decimal(10,2) DEFAULT NULL,
   `reorder_level` int NOT NULL DEFAULT '3',
   `image_url` varchar(2000) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`product_id`),
   KEY `fk_product_category1_idx` (`category_code`),
   KEY `fk_product_brand1_idx` (`brand_id`),
   CONSTRAINT `fk_product_brand1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`),
   CONSTRAINT `fk_product_category1` FOREIGN KEY (`category_code`) REFERENCES `category` (`category_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -386,7 +387,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Shimano Deore M6100 Groupset',NULL,'BIKECOMP',9,12500.00,3,'https://iloilobikeshop.com/cdn/shop/products/image_6484f2e0-6bfc-402a-9966-e6d83757f588.jpg?v=1685631182'),(2,'SRAM GX Eagle 12-Speed Chain',NULL,'BIKECOMP',10,2800.00,5,'https://media.tweekscycles.com/media/catalog/product/cache/938df1aa6fd582849f667e6a2d491158/s/r/srmchpc8030011_d6_feb22.jpg'),(3,'Polygon Cascade 4 Mountain Bike',NULL,'BIKECOMP',11,25000.00,3,'https://media.polygonbikes.com/wp-content/uploads/2022/09/13150556/MY22-CASCADE-FOUR-RR-768x576.png'),(4,'Bell Super DH MIPS Helmet','The Trek Mountain Explorer Pro 29\" is engineered for serious mountain biking enthusiasts who demand performance and reliability on challenging terrain. This premium mountain bike features a lightweight aluminum frame with advanced suspension technology, p','CYCAPPRL',13,9800.00,3,'https://winstanleysbikes.co.uk/media/catalog/product/b/e/bell-super-dh-spherical-mountain-bike-helmet-prime-matte-blue-crimson-right.jpg'),(5,'MOB Alloy Flat Pedals',NULL,'BIKECOMP',14,1200.00,3,'https://ph-test-11.slatic.net/p/7437cf58236c05bb03e9533739396e91.png'),(6,'Ranking T9 Cycling Glasses',NULL,'CYCACCES',15,1500.00,3,'https://rockbrossport.co.uk/cdn/shop/files/ROCKBROS-Cycling-Glasses-Polarised-Sports-Glasses-UV400-Protection_1.jpg?v=1713942669&width=2048'),(7,'Stan13 Bike Chain Lube',NULL,'MAINTREP',16,350.00,5,'https://stans.com/cdn/shop/files/LC0002STAN_SBIOBASEDDRYCHAINLUBE_120ML-FRONT_grande.jpg?v=1724255320'),(8,'Campagnolo Super Record 12-Speed Groupset',NULL,'BIKECOMP',18,45000.00,3,'https://images.bike24.com/i/mb/8e/97/26/280810-00-d-565613.jpg'),(9,'Tektro HD-M275 Hydraulic Disc Brakes',NULL,'BIKECOMP',20,3500.00,3,'https://sportandleisure.com/cdn/shop/products/57_fcc110d2-3a9c-42ad-8741-db83ff20bfac_1000x.jpg?v=1686846239'),(10,'KMC X11 11-Speed Chain',NULL,'BIKECOMP',19,1500.00,3,'https://www.bike-discount.de/media/image/2e/f4/8a/KMC-X11-11-fach-Kette-Master.jpg'),(11,'Maxxis High Roller II 27.5” Tire',NULL,'BIKECOMP',21,2800.00,3,'https://content.competitivecyclist.com/images/items/large/MXX/MXX003T/BK.jpg'),(12,'Fox 36 Factory Series Suspension Fork',NULL,'BIKECOMP',17,55000.00,3,'https://driftbikes.com.au/cdn/shop/files/Fox_36_Float_E_Optimized_Performance_Fork_2023_Grip_3_Pos_Matte_Black.webp?v=1701812945&width=1000'),(13,'Rurok Cordillera Enduro Bike Frame',NULL,'BIKECOMP',22,65000.00,3,'https://static.wixstatic.com/media/b322f6_8284271da2de482ba78fd5c2d92c0f34~mv2_d_2500_1700_s_2.jpg/v1/fill/w_980,h_666,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b322f6_8284271da2de482ba78fd5c2d92c0f34~mv2_d_2500_1700_s_2.jpg'),(14,'Colony Bike Handlebar Grips',NULL,'CYCACCES',23,800.00,3,'https://colonybmx.com.au/news/wp-content/uploads/2013/06/muchroom-green-storm-grips.jpg'),(15,'Shimano XT M8100 12-Speed Cassette',NULL,'BIKECOMP',9,8500.00,3,'https://images.bike24.com/i/mb/6c/31/03/324206-02-d-676202.jpg'),(16,'SRAM Level TL Hydraulic Disc Brakes',NULL,'BIKECOMP',10,6500.00,3,'https://www.sram.com/globalassets/image-hierarchy/sram-product-root-images/brakes---disc/brakes---disc/db-level-t-a1/leveltleverfront.jpg?w=1000'),(17,'Campagnolo Bora WTO 45 Carbon Wheelset',NULL,'BIKECOMP',18,120000.00,3,'https://www.campagnolo.com/dw/image/v2/BJSG_PRD/on/demandware.static/-/Sites-cmp-master-catalog/default/dw3f95ef67/images/hi-res-1/WWRBORAULTRAWTO45C23DB.standard.5.H1.jpg?sw=885&q=85'),(18,'Tektro R539 Road Brake Calipers',NULL,'BIKECOMP',20,2500.00,3,'https://m.media-amazon.com/images/I/614jqD9zOQL._UF894,1000_QL80_.jpg'),(19,'KMC X9 9-Speed Chain',NULL,'BIKECOMP',19,950.00,3,'https://www.bike-discount.de/media/image/23/88/92/KMC-X9-9-fach-Kette-Master.jpg'),(20,'Maxxis Minion DHF 29” Tire',NULL,'BIKECOMP',21,3200.00,3,'https://www.christysports.com/dw/image/v2/BGBB_PRD/on/demandware.static/-/Sites-master-winter/default/dw110652f7/1008961_020_1.jpg?sw=800&sh=800'),(21,'Fox Racing Speedframe Pro Helmet',NULL,'CYCAPPRL',17,12000.00,3,'https://rox.com.ph/cdn/shop/files/1000502229_01.jpg?v=1726543243&width=1080'),(22,'Rurok Kanlaon Hardtail MTB Frame',NULL,'BIKECOMP',22,35000.00,3,'https://static.wixstatic.com/media/b322f6_84b362f5d0a24610ba4dd7045eb14c02~mv2_d_2500_1700_s_2.jpg/v1/fill/w_980,h_666,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b322f6_84b362f5d0a24610ba4dd7045eb14c02~mv2_d_2500_1700_s_2.jpg'),(23,'Colony BMX Pedals',NULL,'BIKECOMP',23,1400.00,3,'https://colonybmx.com.au/news/wp-content/uploads/2013/06/fantastic-pedals-copper.jpg'),(24,'MOB Bike Maintenance Kit',NULL,'MAINTREP',14,750.00,3,'https://m.media-amazon.com/images/I/71an8tEb-DL._AC_UF894,1000_QL80_.jpg'),(25,'Colnago Aero Race Cycling Jersey',NULL,'CYCAPPRL',1,6500.00,3,'https://my-test-11.slatic.net/p/2079ff2f84fe82ebcba8a3e667853a76.jpg'),(26,'Colnago Carbon Fiber Bottle Cage',NULL,'CYCACCES',1,2000.00,3,'https://cdn11.bigcommerce.com/s-cw4c0mbnss/images/stencil/1280x1280/products/163/448/1PRB.CRB.000.000.00SL__21803.1577978661.jpg?c=1'),(27,'Pinarello Dogma F12 Carbon Saddle',NULL,'CYCACCES',2,12000.00,3,'https://www.cicliserino.com/wp-content/uploads/2020/02/PINARELLO-DOGMA-F12.png'),(28,'Pinarello Padded Cycling Bib Shorts',NULL,'CYCAPPRL',2,8500.00,3,'https://www.rdrbikes.it/24487-home_default/pinarello-bibshort-dogma-black.jpg'),(29,'Specialized S-Works Evade II Helmet',NULL,'CYCAPPRL',3,15000.00,3,'https://www.pro-mstore.com/800/61882875/1632999694599/CASCO-SPECIALIZED-SWORKS-EVADE-II-MIPS.jpg'),(30,'Specialized Purist Water Bottle',NULL,'CYCACCES',3,900.00,3,'https://www.balfesbikes.co.uk/images/products/4/44/44119-232_btl_purist-insulated-chromatek-wg-btl-trans-camo-23-oz_hero.jpg?width=1998&height=1998&quality=85&mode=pad&format=webp&bgcolor=ffffff'),(31,'Trek Circuit Softshell Cycling Gloves',NULL,'CYCAPPRL',4,2500.00,3,'https://www.teamcycles.com/images/products/3/31/31057_528_1.webp?width=1998&height=1998&quality=85&mode=pad&format=webp&bgcolor=ffffff'),(32,'Trek Blendr Universal Handlebar Mount',NULL,'CYCACCES',4,1800.00,3,'https://trekstore.lt/23596-large_default/stem-part-bontrager-blendr-universal-light-mount.jpg'),(33,'Cervélo Carbon Seatpost',NULL,'CYCACCES',5,5500.00,3,'https://www.backcountry.com/images/items/large/CVL/CVL1WUH/BLA.jpg'),(34,'Cervélo Cycling Arm Warmers',NULL,'CYCAPPRL',5,2000.00,3,'https://www.bikeandrun.co.uk/images/product/196115141-143_CER_ArmWarmers_8b765f847d1427894761.jpg'),(35,'BMC Aero Race Cycling Socks',NULL,'CYCAPPRL',6,1500.00,3,'https://content.competitivecyclist.com/images/items/large/PLZ/PLZ1376/TEA.jpg'),(36,'BMC Pro Chain Cleaner Kit',NULL,'MAINTREP',6,1200.00,3,'https://www.bmc-air-filter-shop.com/070@WA-200-500/BMC-Washing-Kit-oil-spray-%26-cleaner.jpg'),(37,'Giant Control Tower 3 Floor Pump',NULL,'MAINTREP',7,2200.00,3,'https://images.performancebike.com/images/large/bikes/giant/610000079.jpg'),(38,'Giant Recon HL800 Bike Light',NULL,'CYCACCES',7,3500.00,3,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBCwwYnqqn7imqUHZULoeXI09Sdl04Jcp52Q&s'),(39,'Canyon Signature Pro Road Gloves',NULL,'CYCAPPRL',8,2800.00,3,'https://cdn.prod.website-files.com/668edfdb81f8044d1658c7a6/6695c013f94d1585609baa70_main-9101000-Signature-Pro-Short-Finger-gloves-gy.webp'),(40,'Canyon Bike Care Cleaning Kit',NULL,'MAINTREP',8,1800.00,3,'https://images.bike24.com/i/mb/08/39/9e/muc-off-bike-care-essentials-kit-2-1381502.jpg'),(56,'MOB Philippines Puncture Repair Kit',NULL,'MAINTREP',14,350.00,4,'https://ph-live-01.slatic.net/p/2de2ee6baf023fa837cb3f019b918f8a.jpg'),(57,'Southside Bike Chain Cleaner Set','The Trek Mountain Explorer Pro 29\" is engineered for serious mountain biking enthusiasts who demand performance and reliability on challenging terrain. This premium mountain bike features a lightweight aluminum frame with advanced suspension technology, p','MAINTREP',15,650.00,5,'https://m.media-amazon.com/images/I/71tcUzoONyL.jpg');
+INSERT INTO `product` VALUES (1,'Shimano Deore M6100 Groupset',NULL,'BIKECOMP',9,12500.00,3,'https://iloilobikeshop.com/cdn/shop/products/image_6484f2e0-6bfc-402a-9966-e6d83757f588.jpg?v=1685631182',1),(2,'SRAM GX Eagle 12-Speed Chain',NULL,'BIKECOMP',10,2800.00,5,'https://media.tweekscycles.com/media/catalog/product/cache/938df1aa6fd582849f667e6a2d491158/s/r/srmchpc8030011_d6_feb22.jpg',1),(3,'Polygon Cascade 4 Mountain Bike',NULL,'BIKECOMP',11,25000.00,3,'https://media.polygonbikes.com/wp-content/uploads/2022/09/13150556/MY22-CASCADE-FOUR-RR-768x576.png',1),(4,'Bell Super DH MIPS Helmet','The Trek Mountain Explorer Pro 29\" is engineered for serious mountain biking enthusiasts who demand performance and reliability on challenging terrain. This premium mountain bike features a lightweight aluminum frame with advanced suspension technology, p','CYCAPPRL',13,9800.00,3,'https://winstanleysbikes.co.uk/media/catalog/product/b/e/bell-super-dh-spherical-mountain-bike-helmet-prime-matte-blue-crimson-right.jpg',1),(5,'MOB Alloy Flat Pedals',NULL,'BIKECOMP',14,1200.00,3,'https://ph-test-11.slatic.net/p/7437cf58236c05bb03e9533739396e91.png',1),(6,'Ranking T9 Cycling Glasses',NULL,'CYCACCES',15,1500.00,3,'https://rockbrossport.co.uk/cdn/shop/files/ROCKBROS-Cycling-Glasses-Polarised-Sports-Glasses-UV400-Protection_1.jpg?v=1713942669&width=2048',1),(7,'Stan13 Bike Chain Lube',NULL,'MAINTREP',16,350.00,5,'https://stans.com/cdn/shop/files/LC0002STAN_SBIOBASEDDRYCHAINLUBE_120ML-FRONT_grande.jpg?v=1724255320',1),(8,'Campagnolo Super Record 12-Speed Groupset',NULL,'BIKECOMP',18,45000.00,3,'https://images.bike24.com/i/mb/8e/97/26/280810-00-d-565613.jpg',1),(9,'Tektro HD-M275 Hydraulic Disc Brakes',NULL,'BIKECOMP',20,3500.00,3,'https://sportandleisure.com/cdn/shop/products/57_fcc110d2-3a9c-42ad-8741-db83ff20bfac_1000x.jpg?v=1686846239',1),(10,'KMC X11 11-Speed Chain',NULL,'BIKECOMP',19,1500.00,3,'https://www.bike-discount.de/media/image/2e/f4/8a/KMC-X11-11-fach-Kette-Master.jpg',1),(11,'Maxxis High Roller II 27.5” Tire',NULL,'BIKECOMP',21,2800.00,3,'https://content.competitivecyclist.com/images/items/large/MXX/MXX003T/BK.jpg',1),(12,'Fox 36 Factory Series Suspension Fork',NULL,'BIKECOMP',17,55000.00,3,'https://driftbikes.com.au/cdn/shop/files/Fox_36_Float_E_Optimized_Performance_Fork_2023_Grip_3_Pos_Matte_Black.webp?v=1701812945&width=1000',1),(13,'Rurok Cordillera Enduro Bike Frame',NULL,'BIKECOMP',22,65000.00,3,'https://static.wixstatic.com/media/b322f6_8284271da2de482ba78fd5c2d92c0f34~mv2_d_2500_1700_s_2.jpg/v1/fill/w_980,h_666,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b322f6_8284271da2de482ba78fd5c2d92c0f34~mv2_d_2500_1700_s_2.jpg',1),(14,'Colony Bike Handlebar Grips',NULL,'CYCACCES',23,800.00,3,'https://colonybmx.com.au/news/wp-content/uploads/2013/06/muchroom-green-storm-grips.jpg',1),(15,'Shimano XT M8100 12-Speed Cassette',NULL,'BIKECOMP',9,8500.00,3,'https://images.bike24.com/i/mb/6c/31/03/324206-02-d-676202.jpg',1),(16,'SRAM Level TL Hydraulic Disc Brakes',NULL,'BIKECOMP',10,6500.00,3,'https://www.sram.com/globalassets/image-hierarchy/sram-product-root-images/brakes---disc/brakes---disc/db-level-t-a1/leveltleverfront.jpg?w=1000',1),(17,'Campagnolo Bora WTO 45 Carbon Wheelset',NULL,'BIKECOMP',18,120000.00,3,'https://www.campagnolo.com/dw/image/v2/BJSG_PRD/on/demandware.static/-/Sites-cmp-master-catalog/default/dw3f95ef67/images/hi-res-1/WWRBORAULTRAWTO45C23DB.standard.5.H1.jpg?sw=885&q=85',1),(18,'Tektro R539 Road Brake Calipers',NULL,'BIKECOMP',20,2500.00,3,'https://m.media-amazon.com/images/I/614jqD9zOQL._UF894,1000_QL80_.jpg',1),(19,'KMC X9 9-Speed Chain',NULL,'BIKECOMP',19,950.00,3,'https://www.bike-discount.de/media/image/23/88/92/KMC-X9-9-fach-Kette-Master.jpg',1),(20,'Maxxis Minion DHF 29” Tire',NULL,'BIKECOMP',21,3200.00,3,'https://www.christysports.com/dw/image/v2/BGBB_PRD/on/demandware.static/-/Sites-master-winter/default/dw110652f7/1008961_020_1.jpg?sw=800&sh=800',1),(21,'Fox Racing Speedframe Pro Helmet',NULL,'CYCAPPRL',17,12000.00,3,'https://rox.com.ph/cdn/shop/files/1000502229_01.jpg?v=1726543243&width=1080',1),(22,'Rurok Kanlaon Hardtail MTB Frame',NULL,'BIKECOMP',22,35000.00,3,'https://static.wixstatic.com/media/b322f6_84b362f5d0a24610ba4dd7045eb14c02~mv2_d_2500_1700_s_2.jpg/v1/fill/w_980,h_666,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/b322f6_84b362f5d0a24610ba4dd7045eb14c02~mv2_d_2500_1700_s_2.jpg',1),(23,'Colony BMX Pedals',NULL,'BIKECOMP',23,1400.00,3,'https://colonybmx.com.au/news/wp-content/uploads/2013/06/fantastic-pedals-copper.jpg',1),(24,'MOB Bike Maintenance Kit',NULL,'MAINTREP',14,750.00,3,'https://m.media-amazon.com/images/I/71an8tEb-DL._AC_UF894,1000_QL80_.jpg',1),(25,'Colnago Aero Race Cycling Jersey',NULL,'CYCAPPRL',1,6500.00,3,'https://my-test-11.slatic.net/p/2079ff2f84fe82ebcba8a3e667853a76.jpg',1),(26,'Colnago Carbon Fiber Bottle Cage',NULL,'CYCACCES',1,2000.00,3,'https://cdn11.bigcommerce.com/s-cw4c0mbnss/images/stencil/1280x1280/products/163/448/1PRB.CRB.000.000.00SL__21803.1577978661.jpg?c=1',1),(27,'Pinarello Dogma F12 Carbon Saddle',NULL,'CYCACCES',2,12000.00,3,'https://www.cicliserino.com/wp-content/uploads/2020/02/PINARELLO-DOGMA-F12.png',1),(28,'Pinarello Padded Cycling Bib Shorts',NULL,'CYCAPPRL',2,8500.00,3,'https://www.rdrbikes.it/24487-home_default/pinarello-bibshort-dogma-black.jpg',1),(29,'Specialized S-Works Evade II Helmet',NULL,'CYCAPPRL',3,15000.00,3,'https://www.pro-mstore.com/800/61882875/1632999694599/CASCO-SPECIALIZED-SWORKS-EVADE-II-MIPS.jpg',1),(30,'Specialized Purist Water Bottle',NULL,'CYCACCES',3,900.00,3,'https://www.balfesbikes.co.uk/images/products/4/44/44119-232_btl_purist-insulated-chromatek-wg-btl-trans-camo-23-oz_hero.jpg?width=1998&height=1998&quality=85&mode=pad&format=webp&bgcolor=ffffff',1),(31,'Trek Circuit Softshell Cycling Gloves',NULL,'CYCAPPRL',4,2500.00,3,'https://www.teamcycles.com/images/products/3/31/31057_528_1.webp?width=1998&height=1998&quality=85&mode=pad&format=webp&bgcolor=ffffff',1),(32,'Trek Blendr Universal Handlebar Mount',NULL,'CYCACCES',4,1800.00,3,'https://trekstore.lt/23596-large_default/stem-part-bontrager-blendr-universal-light-mount.jpg',1),(33,'Cervélo Carbon Seatpost',NULL,'CYCACCES',5,5500.00,3,'https://www.backcountry.com/images/items/large/CVL/CVL1WUH/BLA.jpg',1),(34,'Cervélo Cycling Arm Warmers',NULL,'CYCAPPRL',5,2000.00,3,'https://www.bikeandrun.co.uk/images/product/196115141-143_CER_ArmWarmers_8b765f847d1427894761.jpg',1),(35,'BMC Aero Race Cycling Socks',NULL,'CYCAPPRL',6,1500.00,3,'https://content.competitivecyclist.com/images/items/large/PLZ/PLZ1376/TEA.jpg',1),(36,'BMC Pro Chain Cleaner Kit',NULL,'MAINTREP',6,1200.00,3,'https://www.bmc-air-filter-shop.com/070@WA-200-500/BMC-Washing-Kit-oil-spray-%26-cleaner.jpg',1),(37,'Giant Control Tower 3 Floor Pump',NULL,'MAINTREP',7,2200.00,3,'https://images.performancebike.com/images/large/bikes/giant/610000079.jpg',1),(38,'Giant Recon HL800 Bike Light',NULL,'CYCACCES',7,3500.00,3,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBCwwYnqqn7imqUHZULoeXI09Sdl04Jcp52Q&s',1),(39,'Canyon Signature Pro Road Gloves',NULL,'CYCAPPRL',8,2800.00,3,'https://cdn.prod.website-files.com/668edfdb81f8044d1658c7a6/6695c013f94d1585609baa70_main-9101000-Signature-Pro-Short-Finger-gloves-gy.webp',1),(40,'Canyon Bike Care Cleaning Kit',NULL,'MAINTREP',8,1800.00,3,'https://images.bike24.com/i/mb/08/39/9e/muc-off-bike-care-essentials-kit-2-1381502.jpg',1),(56,'MOB Philippines Puncture Repair Kit',NULL,'MAINTREP',14,350.00,4,'https://ph-live-01.slatic.net/p/2de2ee6baf023fa837cb3f019b918f8a.jpg',1),(57,'Southside Bike Chain Cleaner Set','The Trek Mountain Explorer Pro 29\" is engineered for serious mountain biking enthusiasts who demand performance and reliability on challenging terrain. This premium mountain bike features a lightweight aluminum frame with advanced suspension technology, p','MAINTREP',15,650.00,5,'https://m.media-amazon.com/images/I/71tcUzoONyL.jpg',1),(58,'test',NULL,'CYCACCES',2,120.00,3,NULL,0),(59,'test',NULL,'BIKECOMP',1,1.00,1,NULL,0);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,7 +405,7 @@ CREATE TABLE `product_images` (
   PRIMARY KEY (`product_image_id`),
   KEY `fk_product_images_product_id_idx` (`product_id`),
   CONSTRAINT `fk_product_images_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -413,7 +414,7 @@ CREATE TABLE `product_images` (
 
 LOCK TABLES `product_images` WRITE;
 /*!40000 ALTER TABLE `product_images` DISABLE KEYS */;
-INSERT INTO `product_images` VALUES (1,1,'https://iloilobikeshop.com/cdn/shop/products/image_6484f2e0-6bfc-402a-9966-e6d83757f588.jpg?v=1685631182'),(2,1,'https://iloilobikeshop.com/cdn/shop/products/image_5d824b83-fff8-4501-b155-ef64d9324469.jpg?v=1685631182'),(3,1,'https://iloilobikeshop.com/cdn/shop/products/image_45694869-b18c-4890-91a4-29170efddd72.jpg?v=1685631182'),(4,1,'https://iloilobikeshop.com/cdn/shop/products/image_1cefbe96-1b24-4f10-826a-23a149f22d97.jpg?v=1685631182'),(5,1,'https://iloilobikeshop.com/cdn/shop/products/image_13ee7764-5af5-475c-aa19-964eab5b43ea.jpg?v=1685631182'),(6,2,'https://media.tweekscycles.com/media/catalog/product/cache/938df1aa6fd582849f667e6a2d491158/s/r/srmchpc8030011_d6_feb22.jpg'),(7,2,'https://images.bike24.com/media/510/i/mb/fa/97/34/230859-01-d-445028.jpg'),(8,2,'https://www.tnc-hamburg.com/images/product_images/info_images/Kette_Sram_GX_Eagle_Transmission_65354_0.webp'),(9,2,'https://www.chain-nerds.com/cdn/shop/files/SRAM-GX-2_1.png?v=1717911801&width=1946'),(10,2,'https://risecomponents.com/cdn/shop/files/SramGXEagleSpeedChain.webp?v=1722356999');
+INSERT INTO `product_images` VALUES (1,1,'https://iloilobikeshop.com/cdn/shop/products/image_6484f2e0-6bfc-402a-9966-e6d83757f588.jpg?v=1685631182'),(2,1,'https://iloilobikeshop.com/cdn/shop/products/image_5d824b83-fff8-4501-b155-ef64d9324469.jpg?v=1685631182'),(3,1,'https://iloilobikeshop.com/cdn/shop/products/image_45694869-b18c-4890-91a4-29170efddd72.jpg?v=1685631182'),(4,1,'https://iloilobikeshop.com/cdn/shop/products/image_1cefbe96-1b24-4f10-826a-23a149f22d97.jpg?v=1685631182'),(5,1,'https://iloilobikeshop.com/cdn/shop/products/image_13ee7764-5af5-475c-aa19-964eab5b43ea.jpg?v=1685631182'),(6,2,'https://media.tweekscycles.com/media/catalog/product/cache/938df1aa6fd582849f667e6a2d491158/s/r/srmchpc8030011_d6_feb22.jpg'),(7,2,'https://images.bike24.com/media/510/i/mb/fa/97/34/230859-01-d-445028.jpg'),(8,2,'https://www.tnc-hamburg.com/images/product_images/info_images/Kette_Sram_GX_Eagle_Transmission_65354_0.webp'),(9,2,'https://www.chain-nerds.com/cdn/shop/files/SRAM-GX-2_1.png?v=1717911801&width=1946'),(10,2,'https://risecomponents.com/cdn/shop/files/SramGXEagleSpeedChain.webp?v=1722356999'),(11,3,'https://i1.adis.ws/i/jpl/go_553040_a?w=638&h=638&&fmt=webp&fmt=webp'),(12,3,'https://bikes.fan/wp-content/uploads/bike_images/polygon-cascade-4-2024-2.jpeg'),(13,3,'https://m.media-amazon.com/images/I/517tYAGBPyL._UF350,350_QL80_.jpg'),(14,3,'https://i0.wp.com/staytunedbikesonline.in/wp-content/uploads/2025/08/MY22-CASCADE-TWO-LF.png?fit=1400%2C1050&ssl=1');
 /*!40000 ALTER TABLE `product_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,15 +428,19 @@ DROP TABLE IF EXISTS `return_and_replacement`;
 CREATE TABLE `return_and_replacement` (
   `return_id` int NOT NULL AUTO_INCREMENT,
   `sale_detail_id` int NOT NULL,
+  `quantity` int NOT NULL DEFAULT '0',
   `return_status` char(4) NOT NULL,
   `transaction_date` datetime NOT NULL,
   `remarks` varchar(255) DEFAULT NULL,
+  `replacement_product_id` int DEFAULT NULL,
   PRIMARY KEY (`return_id`),
   KEY `fk_return_and_replacement_sale_details1_idx` (`sale_detail_id`),
   KEY `fk_return_and_replacement_status1_idx` (`return_status`),
+  KEY `fk_return_replacement_product` (`replacement_product_id`),
   CONSTRAINT `fk_return_and_replacement_sale_details1` FOREIGN KEY (`sale_detail_id`) REFERENCES `sale_details` (`sale_detail_id`),
-  CONSTRAINT `fk_return_and_replacement_status1` FOREIGN KEY (`return_status`) REFERENCES `status` (`status_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_return_and_replacement_status1` FOREIGN KEY (`return_status`) REFERENCES `status` (`status_code`),
+  CONSTRAINT `fk_return_replacement_product` FOREIGN KEY (`replacement_product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -444,7 +449,7 @@ CREATE TABLE `return_and_replacement` (
 
 LOCK TABLES `return_and_replacement` WRITE;
 /*!40000 ALTER TABLE `return_and_replacement` DISABLE KEYS */;
-INSERT INTO `return_and_replacement` VALUES (1,2031,'2001','2025-02-25 10:30:00','Request received'),(2,2031,'2004','2025-02-25 11:00:00','Pending validation'),(3,2031,'2006','2025-02-25 11:20:00','In process by concerned department'),(4,2031,'2002','2025-02-25 13:30:00','Approved by manager'),(5,2031,'2009','2025-02-25 13:35:00','Replacement processed'),(6,2031,'2009','2025-02-25 14:00:00','Replacement request resolved'),(7,6,'2001','2025-10-23 09:36:42','Request received'),(8,5,'2001','2025-10-23 09:36:42','Request received'),(9,4,'2001','2025-10-23 09:36:42','Request received'),(10,3,'2001','2025-10-23 09:36:42','Request received'),(11,2,'2001','2025-10-23 09:36:42','Request received'),(14,6,'2004','2025-10-23 09:51:45','Pending validation'),(15,5,'2004','2025-10-23 09:51:45','Pending validation'),(16,4,'2004','2025-10-23 09:51:45','Pending validation'),(17,3,'2004','2025-10-23 09:51:45','Pending validation'),(18,2,'2004','2025-10-23 09:51:45','Pending validation'),(21,6,'2002','2025-10-23 10:21:49','Approved by manager'),(22,5,'2002','2025-10-23 10:21:49','Approved by manager'),(23,4,'2002','2025-10-23 10:21:49','Approved by manager'),(24,3,'2002','2025-10-23 10:21:49','Approved by manager'),(25,2,'2002','2025-10-23 10:21:49','Approved by manager'),(28,6,'2009','2025-10-23 11:06:52','Completed'),(29,5,'2009','2025-10-23 11:06:52','Completed'),(30,4,'2009','2025-10-23 11:06:52','Completed'),(31,3,'2009','2025-10-23 11:06:52','Completed'),(32,2,'2009','2025-10-23 11:06:52','Completed');
+INSERT INTO `return_and_replacement` VALUES (1,2031,0,'2001','2025-02-25 10:30:00','Request received',NULL),(2,2031,0,'2004','2025-02-25 11:00:00','Pending validation',NULL),(3,2031,0,'2006','2025-02-25 11:20:00','In process by concerned department',NULL),(4,2031,0,'2002','2025-02-25 13:30:00','Approved by manager',NULL),(5,2031,0,'2009','2025-02-25 13:35:00','Replacement processed',NULL),(6,2031,0,'2009','2025-02-25 14:00:00','Replacement request resolved',NULL),(7,6,0,'2001','2025-10-23 09:36:42','Request received',NULL),(8,5,0,'2001','2025-10-23 09:36:42','Request received',NULL),(9,4,0,'2001','2025-10-23 09:36:42','Request received',NULL),(10,3,0,'2001','2025-10-23 09:36:42','Request received',NULL),(11,2,0,'2001','2025-10-23 09:36:42','Request received',NULL),(14,6,0,'2004','2025-10-23 09:51:45','Pending validation',NULL),(15,5,0,'2004','2025-10-23 09:51:45','Pending validation',NULL),(16,4,0,'2004','2025-10-23 09:51:45','Pending validation',NULL),(17,3,0,'2004','2025-10-23 09:51:45','Pending validation',NULL),(18,2,0,'2004','2025-10-23 09:51:45','Pending validation',NULL),(21,6,0,'2002','2025-10-23 10:21:49','Approved by manager',NULL),(22,5,0,'2002','2025-10-23 10:21:49','Approved by manager',NULL),(23,4,0,'2002','2025-10-23 10:21:49','Approved by manager',NULL),(24,3,0,'2002','2025-10-23 10:21:49','Approved by manager',NULL),(25,2,0,'2002','2025-10-23 10:21:49','Approved by manager',NULL),(28,6,0,'2009','2025-10-23 11:06:52','Completed',NULL),(29,5,0,'2009','2025-10-23 11:06:52','Completed',NULL),(30,4,0,'2009','2025-10-23 11:06:52','Completed',NULL),(31,3,0,'2009','2025-10-23 11:06:52','Completed',NULL),(32,2,0,'2009','2025-10-23 11:06:52','Completed',NULL),(34,29,1,'POST','2025-10-25 06:32:04','Sale #13 • Broken Brush Handle',NULL);
 /*!40000 ALTER TABLE `return_and_replacement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,6 +490,7 @@ CREATE TABLE `sale` (
   `sale_date` datetime NOT NULL,
   `cashier` int NOT NULL,
   `manager` int NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Pending',
   PRIMARY KEY (`sale_id`),
   KEY `fk_sale_customer1_idx` (`customer_id`),
   KEY `fk_sale_employee1_idx` (`cashier`),
@@ -492,7 +498,7 @@ CREATE TABLE `sale` (
   CONSTRAINT `fk_sale_customer1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
   CONSTRAINT `fk_sale_employee1` FOREIGN KEY (`cashier`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `fk_sale_employee2` FOREIGN KEY (`manager`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,7 +507,7 @@ CREATE TABLE `sale` (
 
 LOCK TABLES `sale` WRITE;
 /*!40000 ALTER TABLE `sale` DISABLE KEYS */;
-INSERT INTO `sale` VALUES (1,1,'2025-10-21 14:37:57',1,13),(2,1,'2025-10-21 14:38:59',1,13),(3,23,'2025-10-23 10:49:15',6,13),(4,24,'2025-10-23 10:50:27',5,13),(5,25,'2025-10-23 10:51:44',5,13),(6,26,'2025-10-23 10:54:27',7,13),(7,27,'2025-10-24 03:44:38',7,13),(8,28,'2025-10-24 03:57:22',4,13),(9,29,'2025-10-24 03:58:21',1,13),(10,30,'2025-10-24 04:00:44',7,13),(11,31,'2025-10-24 10:23:16',6,13),(12,32,'2025-10-24 10:51:34',1,13);
+INSERT INTO `sale` VALUES (1,1,'2025-10-21 14:37:57',1,13,'Completed'),(2,1,'2025-10-21 14:38:59',1,13,'Completed'),(3,23,'2025-10-23 10:49:15',6,13,'Completed'),(4,24,'2025-10-23 10:50:27',5,13,'Completed'),(5,25,'2025-10-23 10:51:44',5,13,'Completed'),(6,26,'2025-10-23 10:54:27',7,13,'Completed'),(7,27,'2025-10-24 03:44:38',7,13,'Completed'),(8,28,'2025-10-24 03:57:22',4,13,'Completed'),(9,29,'2025-10-24 03:58:21',1,13,'Completed'),(10,30,'2025-10-24 04:00:44',7,13,'Completed'),(11,31,'2025-10-24 10:23:16',6,13,'Completed'),(12,32,'2025-10-24 10:51:34',1,13,'Completed'),(13,33,'2025-10-25 02:35:16',7,13,'Completed'),(14,34,'2025-10-25 04:31:59',5,13,'Completed'),(15,35,'2025-10-25 04:32:23',4,13,'Completed'),(16,36,'2025-10-25 04:32:57',2,13,'Pending'),(17,37,'2025-10-25 04:33:20',1,13,'Pending'),(18,38,'2025-10-25 04:33:54',3,13,'Pending');
 /*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +528,7 @@ CREATE TABLE `sale_details` (
   KEY `fk_sale_details_product1_idx` (`product_id`),
   CONSTRAINT `fk_sale_details_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `fk_sale_details_sale1` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`sale_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -531,7 +537,7 @@ CREATE TABLE `sale_details` (
 
 LOCK TABLES `sale_details` WRITE;
 /*!40000 ALTER TABLE `sale_details` DISABLE KEYS */;
-INSERT INTO `sale_details` VALUES (1,1,1,1),(2,1,2,1),(3,2,6,1),(4,2,5,1),(5,2,10,1),(6,2,11,2),(7,3,25,1),(8,4,7,3),(9,5,6,1),(10,5,15,1),(11,5,36,1),(12,6,7,5),(13,6,36,1),(14,7,2,1),(15,7,7,1),(16,7,14,1),(17,8,6,1),(18,8,11,1),(19,8,14,1),(20,9,31,1),(21,9,34,1),(22,9,28,1),(23,10,10,1),(24,10,7,1),(25,10,24,1),(26,10,57,1),(27,11,4,1),(28,12,4,1);
+INSERT INTO `sale_details` VALUES (1,1,1,1),(2,1,2,1),(3,2,6,1),(4,2,5,1),(5,2,10,1),(6,2,11,2),(7,3,25,1),(8,4,7,3),(9,5,6,1),(10,5,15,1),(11,5,36,1),(12,6,7,5),(13,6,36,1),(14,7,2,1),(15,7,7,1),(16,7,14,1),(17,8,6,1),(18,8,11,1),(19,8,14,1),(20,9,31,1),(21,9,34,1),(22,9,28,1),(23,10,10,1),(24,10,7,1),(25,10,24,1),(26,10,57,1),(27,11,4,1),(28,12,4,1),(29,13,57,1),(30,13,56,1),(31,13,37,1),(32,14,5,1),(33,15,57,1),(34,15,37,1),(35,16,24,1),(36,16,32,1),(37,16,38,1),(38,17,27,1),(39,18,35,1),(40,18,29,1);
 /*!40000 ALTER TABLE `sale_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,7 +558,7 @@ CREATE TABLE `sale_payment_type` (
   KEY `fk_sale_payment_type_payment_method1_idx` (`payment_method_code`),
   CONSTRAINT `fk_sale_payment_type_payment_method1` FOREIGN KEY (`payment_method_code`) REFERENCES `payment_method` (`payment_method_code`),
   CONSTRAINT `fk_sale_payment_type_sale1` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`sale_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5049 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5055 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -561,7 +567,7 @@ CREATE TABLE `sale_payment_type` (
 
 LOCK TABLES `sale_payment_type` WRITE;
 /*!40000 ALTER TABLE `sale_payment_type` DISABLE KEYS */;
-INSERT INTO `sale_payment_type` VALUES (5037,1,'CASH','TXN-1761057477865'),(5038,2,'EWP','TXN-1761057539713'),(5039,3,'EWP','TXN-1761216555967'),(5040,4,'BT','TXN-1761216627553'),(5041,5,'CC','TXN-1761216704769'),(5042,6,'CASH','TXN-1761216867813'),(5043,7,'CASH','TXN-1761277478762'),(5044,8,'CC','TXN-1761278242212'),(5045,9,'BT','TXN-1761278301203'),(5046,10,'EWP','TXN-1761278444156'),(5047,11,'CASH','TXN-1761301396597'),(5048,12,'DC','TXN-1761303094032');
+INSERT INTO `sale_payment_type` VALUES (5037,1,'CASH','TXN-1761057477865'),(5038,2,'EWP','TXN-1761057539713'),(5039,3,'EWP','TXN-1761216555967'),(5040,4,'BT','TXN-1761216627553'),(5041,5,'CC','TXN-1761216704769'),(5042,6,'CASH','TXN-1761216867813'),(5043,7,'CASH','TXN-1761277478762'),(5044,8,'CC','TXN-1761278242212'),(5045,9,'BT','TXN-1761278301203'),(5046,10,'EWP','TXN-1761278444156'),(5047,11,'CASH','TXN-1761301396597'),(5048,12,'DC','TXN-1761303094032'),(5049,13,'EWP','TXN-1761359716133'),(5050,14,'CASH','TXN-1761366719819'),(5051,15,'CC','TXN-1761366743778'),(5052,16,'BT','TXN-1761366777866'),(5053,17,'CC','TXN-1761366800271'),(5054,18,'DC','TXN-1761366834677');
 /*!40000 ALTER TABLE `sale_payment_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -588,7 +594,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES ('0001','Active','EMPLSTAT'),('0002','Probationary','EMPLSTAT'),('0003','Part-Time','EMPLSTAT'),('0004','Full-Time','EMPLSTAT'),('0005','Terminated','EMPLSTAT'),('0006','Resigned','EMPLSTAT'),('0007','Retired','EMPLSTAT'),('1001','Present','ATTNSTAT'),('1002','Leave of Absence','ATTNSTAT'),('1003','Suspended','ATTNSTAT'),('1004','Furloughed','ATTNSTAT'),('1005','Medical Leave','ATTNSTAT'),('1006','Parental Leave','ATTNSTAT'),('2001','Requested','SLRTSTAT'),('2002','Approved','SLRTSTAT'),('2003','Rejected','SLRTSTAT'),('2004','Pending','SLRTSTAT'),('2005','Received','SLRTSTAT'),('2006','In Process','SLRTSTAT'),('2007','Refunded','SLRTSTAT'),('2008','Exchanged','SLRTSTAT'),('2009','Completed','SLRTSTAT'),('2010','Cancelled','SLRTSTAT'),('2011','Resolved','SLRTSTAT');
+INSERT INTO `status` VALUES ('0001','Active','EMPLSTAT'),('0002','Probationary','EMPLSTAT'),('0003','Part-Time','EMPLSTAT'),('0004','Full-Time','EMPLSTAT'),('0005','Terminated','EMPLSTAT'),('0006','Resigned','EMPLSTAT'),('0007','Retired','EMPLSTAT'),('1001','Present','ATTNSTAT'),('1002','Leave of Absence','ATTNSTAT'),('1003','Suspended','ATTNSTAT'),('1004','Furloughed','ATTNSTAT'),('1005','Medical Leave','ATTNSTAT'),('1006','Parental Leave','ATTNSTAT'),('2001','Requested','SLRTSTAT'),('2002','Approved','SLRTSTAT'),('2003','Rejected','SLRTSTAT'),('2004','Pending','SLRTSTAT'),('2005','Received','SLRTSTAT'),('2006','In Process','SLRTSTAT'),('2007','Refunded','SLRTSTAT'),('2008','Exchanged','SLRTSTAT'),('2009','Completed','SLRTSTAT'),('2010','Cancelled','SLRTSTAT'),('2011','Resolved','SLRTSTAT'),('APPR','Approved return','RETURN'),('PEND','Pending return','RETURN'),('POST','Posted return','RETURN');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -612,8 +618,74 @@ CREATE TABLE `status_reference_code` (
 
 LOCK TABLES `status_reference_code` WRITE;
 /*!40000 ALTER TABLE `status_reference_code` DISABLE KEYS */;
-INSERT INTO `status_reference_code` VALUES ('ATTNSTAT','Attendance Status'),('EMPLSTAT','Employee Status'),('SLRTSTAT','Sales Return Status');
+INSERT INTO `status_reference_code` VALUES ('ATTNSTAT','Attendance Status'),('EMPLSTAT','Employee Status'),('RETURN','Return/Replacement statuses'),('SLRTSTAT','Sales Return Status');
 /*!40000 ALTER TABLE `status_reference_code` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_adjustment`
+--
+
+DROP TABLE IF EXISTS `stock_adjustment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stock_adjustment` (
+  `adjustment_id` int NOT NULL AUTO_INCREMENT,
+  `client_request_id` varchar(64) DEFAULT NULL,
+  `return_id` int DEFAULT NULL,
+  `adjustment_type` enum('return','replacement','manual') NOT NULL,
+  `transaction_date` datetime NOT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `processed_by` int DEFAULT NULL,
+  PRIMARY KEY (`adjustment_id`),
+  UNIQUE KEY `ux_stock_adjustment_client_request_id` (`client_request_id`),
+  KEY `fk_stock_adjustment_employee` (`processed_by`),
+  KEY `fk_stock_adjustment_return` (`return_id`),
+  KEY `idx_stock_adjustment_date` (`transaction_date`),
+  KEY `idx_stock_adjustment_type` (`adjustment_type`),
+  CONSTRAINT `fk_stock_adjustment_employee` FOREIGN KEY (`processed_by`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `fk_stock_adjustment_return` FOREIGN KEY (`return_id`) REFERENCES `return_and_replacement` (`return_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_adjustment`
+--
+
+LOCK TABLES `stock_adjustment` WRITE;
+/*!40000 ALTER TABLE `stock_adjustment` DISABLE KEYS */;
+INSERT INTO `stock_adjustment` VALUES (1,NULL,NULL,'return','2025-10-24 14:17:14','Sale #1 • Defective Component',NULL),(2,NULL,NULL,'manual','2025-10-23 09:10:00','Manual adjustment via Product Details',NULL),(3,NULL,NULL,'manual','2025-10-23 09:10:00','Manual adjustment via Product Details',NULL),(4,'f779af56-8f09-4333-b960-e2ee4366a46f',34,'return','2025-10-25 06:32:04','Sale #13 • Broken Brush Handle',NULL);
+/*!40000 ALTER TABLE `stock_adjustment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_adjustment_details`
+--
+
+DROP TABLE IF EXISTS `stock_adjustment_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stock_adjustment_details` (
+  `adjustment_detail_id` int NOT NULL AUTO_INCREMENT,
+  `adjustment_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`adjustment_detail_id`),
+  KEY `idx_stock_adjustment_detail_adj` (`adjustment_id`),
+  KEY `idx_stock_adjustment_detail_product` (`product_id`),
+  CONSTRAINT `fk_stock_adjustment_details_header` FOREIGN KEY (`adjustment_id`) REFERENCES `stock_adjustment` (`adjustment_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_stock_adjustment_details_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_adjustment_details`
+--
+
+LOCK TABLES `stock_adjustment_details` WRITE;
+/*!40000 ALTER TABLE `stock_adjustment_details` DISABLE KEYS */;
+INSERT INTO `stock_adjustment_details` VALUES (1,1,1,1),(2,2,4,1),(3,3,4,1),(4,4,57,1);
+/*!40000 ALTER TABLE `stock_adjustment_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -763,7 +835,7 @@ CREATE TABLE `supply` (
   CONSTRAINT `fk_supply_employee2` FOREIGN KEY (`manager`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `fk_supply_payment_method1` FOREIGN KEY (`payment_method_code`) REFERENCES `payment_method` (`payment_method_code`),
   CONSTRAINT `fk_supply_supplier1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -772,7 +844,7 @@ CREATE TABLE `supply` (
 
 LOCK TABLES `supply` WRITE;
 /*!40000 ALTER TABLE `supply` DISABLE KEYS */;
-INSERT INTO `supply` VALUES (1,1,'2025-02-01 09:50:00','CASH',6,13),(2,1,'2025-02-11 09:50:00','CASH',6,13),(3,1,'2025-10-23 09:09:46','CASH',6,13),(4,2,'2025-10-23 09:09:46','CASH',6,13),(5,3,'2025-10-23 09:09:46','CASH',6,13),(6,4,'2025-10-23 09:09:46','CASH',6,13),(7,5,'2025-10-23 09:09:46','CASH',6,13),(10,3,'2025-10-23 13:36:38','CASH',6,13),(11,3,'2025-10-23 13:48:28','CASH',6,13),(12,2,'2025-10-24 00:00:00','CASH',6,13),(13,1,'2025-10-24 13:26:33','CASH',1,13);
+INSERT INTO `supply` VALUES (1,1,'2025-02-01 09:50:00','CASH',6,13),(2,1,'2025-02-11 09:50:00','CASH',6,13),(3,1,'2025-10-23 09:09:46','CASH',6,13),(4,2,'2025-10-23 09:09:46','CASH',6,13),(5,3,'2025-10-23 09:09:46','CASH',6,13),(6,4,'2025-10-23 09:09:46','CASH',6,13),(7,5,'2025-10-23 09:09:46','CASH',6,13),(10,3,'2025-10-23 13:36:38','CASH',6,13),(11,3,'2025-10-23 13:48:28','CASH',6,13),(12,2,'2025-10-24 00:00:00','CASH',6,13),(13,1,'2025-10-24 13:26:33','CASH',1,13),(14,2,'2025-10-25 05:26:50','CASH',6,13),(15,1,'2025-10-25 06:23:17','CASH',6,13);
 /*!40000 ALTER TABLE `supply` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -793,7 +865,7 @@ CREATE TABLE `supply_details` (
   KEY `fk_supply_details_product1_idx` (`product_id`),
   CONSTRAINT `fk_supply_details_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `fk_supply_details_supply1` FOREIGN KEY (`supply_id`) REFERENCES `supply` (`supply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -802,7 +874,7 @@ CREATE TABLE `supply_details` (
 
 LOCK TABLES `supply_details` WRITE;
 /*!40000 ALTER TABLE `supply_details` DISABLE KEYS */;
-INSERT INTO `supply_details` VALUES (1,1,1,12),(2,1,2,15),(3,1,3,23),(4,1,4,11),(5,1,5,15),(6,1,6,14),(7,1,7,10),(8,1,8,50),(9,1,9,11),(10,1,10,21),(11,1,11,21),(12,1,12,31),(13,1,13,44),(14,1,14,36),(15,1,15,38),(16,1,16,30),(17,1,17,26),(18,1,18,33),(19,1,19,35),(20,1,20,26),(21,1,21,16),(22,1,22,32),(23,1,23,21),(24,1,24,42),(25,1,25,14),(26,1,26,17),(27,1,27,33),(28,1,28,24),(29,1,29,11),(30,1,30,13),(31,1,31,24),(32,1,32,31),(33,1,33,32),(34,1,34,18),(35,1,35,24),(36,1,36,15),(37,1,37,36),(38,1,38,43),(39,1,39,14),(40,1,40,16),(87,3,1,3),(88,2,1,2),(89,3,2,1),(90,2,2,3),(91,3,3,1),(92,2,3,5),(93,3,4,1),(94,2,4,2),(95,3,5,1),(96,2,5,2),(97,4,2,5),(98,4,7,2),(99,4,12,4),(100,4,17,2),(101,4,22,1),(102,5,3,5),(103,5,8,3),(104,5,13,3),(105,5,18,5),(106,5,23,2),(107,6,4,5),(108,6,9,4),(109,6,14,3),(110,6,19,1),(111,6,24,1),(112,7,5,4),(113,7,10,5),(114,7,15,1),(115,7,20,5),(116,7,25,2),(118,10,56,10),(119,11,57,6),(120,12,7,5),(121,13,4,2);
+INSERT INTO `supply_details` VALUES (1,1,1,12),(2,1,2,15),(3,1,3,23),(4,1,4,11),(5,1,5,15),(6,1,6,14),(7,1,7,10),(8,1,8,50),(9,1,9,11),(10,1,10,21),(11,1,11,21),(12,1,12,31),(13,1,13,44),(14,1,14,36),(15,1,15,38),(16,1,16,30),(17,1,17,26),(18,1,18,33),(19,1,19,35),(20,1,20,26),(21,1,21,16),(22,1,22,32),(23,1,23,21),(24,1,24,42),(25,1,25,14),(26,1,26,17),(27,1,27,33),(28,1,28,24),(29,1,29,11),(30,1,30,13),(31,1,31,24),(32,1,32,31),(33,1,33,32),(34,1,34,18),(35,1,35,24),(36,1,36,15),(37,1,37,36),(38,1,38,43),(39,1,39,14),(40,1,40,16),(87,3,1,3),(88,2,1,2),(89,3,2,1),(90,2,2,3),(91,3,3,1),(92,2,3,5),(93,3,4,1),(94,2,4,2),(95,3,5,1),(96,2,5,2),(97,4,2,5),(98,4,7,2),(99,4,12,4),(100,4,17,2),(101,4,22,1),(102,5,3,5),(103,5,8,3),(104,5,13,3),(105,5,18,5),(106,5,23,2),(107,6,4,5),(108,6,9,4),(109,6,14,3),(110,6,19,1),(111,6,24,1),(112,7,5,4),(113,7,10,5),(114,7,15,1),(115,7,20,5),(116,7,25,2),(118,10,56,10),(119,11,57,6),(120,12,7,5),(121,13,4,2),(122,14,58,10),(123,15,59,1);
 /*!40000 ALTER TABLE `supply_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -815,4 +887,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-24 22:45:29
+-- Dump completed on 2025-10-25 14:35:53
