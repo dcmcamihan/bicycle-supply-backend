@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: dbbicycle_supply
 -- ------------------------------------------------------
--- Server version	8.4.6
+-- Server version	9.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -645,7 +645,7 @@ CREATE TABLE `stock_adjustment` (
   KEY `idx_stock_adjustment_type` (`adjustment_type`),
   CONSTRAINT `fk_stock_adjustment_employee` FOREIGN KEY (`processed_by`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `fk_stock_adjustment_return` FOREIGN KEY (`return_id`) REFERENCES `return_and_replacement` (`return_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -654,7 +654,7 @@ CREATE TABLE `stock_adjustment` (
 
 LOCK TABLES `stock_adjustment` WRITE;
 /*!40000 ALTER TABLE `stock_adjustment` DISABLE KEYS */;
-INSERT INTO `stock_adjustment` VALUES (1,NULL,NULL,'return','2025-10-24 14:17:14','Sale #1 • Defective Component',NULL),(2,NULL,NULL,'manual','2025-10-23 09:10:00','Manual adjustment via Product Details',NULL),(3,NULL,NULL,'manual','2025-10-23 09:10:00','Manual adjustment via Product Details',NULL),(4,'f779af56-8f09-4333-b960-e2ee4366a46f',34,'return','2025-10-25 06:32:04','Sale #13 • Broken Brush Handle',NULL);
+INSERT INTO `stock_adjustment` VALUES (1,NULL,NULL,'manual','2025-10-25 16:06:14','The quantity of Product #1 from Supply #2 has been changed from 9 to 5.',8),(2,NULL,NULL,'manual','2025-10-25 16:06:39','The quantity of Product #1 from Supply #3 has been changed from 7 to 8.',8),(3,NULL,NULL,'manual','2025-10-25 16:06:39','The quantity of Product #1 from Supply #1 has been changed from 12 to 11.',8);
 /*!40000 ALTER TABLE `stock_adjustment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -675,7 +675,7 @@ CREATE TABLE `stock_adjustment_details` (
   KEY `idx_stock_adjustment_detail_product` (`product_id`),
   CONSTRAINT `fk_stock_adjustment_details_header` FOREIGN KEY (`adjustment_id`) REFERENCES `stock_adjustment` (`adjustment_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_stock_adjustment_details_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -684,7 +684,7 @@ CREATE TABLE `stock_adjustment_details` (
 
 LOCK TABLES `stock_adjustment_details` WRITE;
 /*!40000 ALTER TABLE `stock_adjustment_details` DISABLE KEYS */;
-INSERT INTO `stock_adjustment_details` VALUES (1,1,1,1),(2,2,4,1),(3,3,4,1),(4,4,57,1);
+INSERT INTO `stock_adjustment_details` VALUES (1,1,1,5),(2,2,1,8),(3,3,1,11);
 /*!40000 ALTER TABLE `stock_adjustment_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -874,7 +874,7 @@ CREATE TABLE `supply_details` (
 
 LOCK TABLES `supply_details` WRITE;
 /*!40000 ALTER TABLE `supply_details` DISABLE KEYS */;
-INSERT INTO `supply_details` VALUES (1,1,1,12),(2,1,2,15),(3,1,3,23),(4,1,4,11),(5,1,5,15),(6,1,6,14),(7,1,7,10),(8,1,8,50),(9,1,9,11),(10,1,10,21),(11,1,11,21),(12,1,12,31),(13,1,13,44),(14,1,14,36),(15,1,15,38),(16,1,16,30),(17,1,17,26),(18,1,18,33),(19,1,19,35),(20,1,20,26),(21,1,21,16),(22,1,22,32),(23,1,23,21),(24,1,24,42),(25,1,25,14),(26,1,26,17),(27,1,27,33),(28,1,28,24),(29,1,29,11),(30,1,30,13),(31,1,31,24),(32,1,32,31),(33,1,33,32),(34,1,34,18),(35,1,35,24),(36,1,36,15),(37,1,37,36),(38,1,38,43),(39,1,39,14),(40,1,40,16),(87,3,1,3),(88,2,1,2),(89,3,2,1),(90,2,2,3),(91,3,3,1),(92,2,3,5),(93,3,4,1),(94,2,4,2),(95,3,5,1),(96,2,5,2),(97,4,2,5),(98,4,7,2),(99,4,12,4),(100,4,17,2),(101,4,22,1),(102,5,3,5),(103,5,8,3),(104,5,13,3),(105,5,18,5),(106,5,23,2),(107,6,4,5),(108,6,9,4),(109,6,14,3),(110,6,19,1),(111,6,24,1),(112,7,5,4),(113,7,10,5),(114,7,15,1),(115,7,20,5),(116,7,25,2),(118,10,56,10),(119,11,57,6),(120,12,7,5),(121,13,4,2),(122,14,58,10),(123,15,59,1);
+INSERT INTO `supply_details` VALUES (1,1,1,11),(2,1,2,15),(3,1,3,23),(4,1,4,11),(5,1,5,15),(6,1,6,14),(7,1,7,10),(8,1,8,50),(9,1,9,11),(10,1,10,21),(11,1,11,21),(12,1,12,31),(13,1,13,44),(14,1,14,36),(15,1,15,38),(16,1,16,30),(17,1,17,26),(18,1,18,33),(19,1,19,35),(20,1,20,26),(21,1,21,16),(22,1,22,32),(23,1,23,21),(24,1,24,42),(25,1,25,14),(26,1,26,17),(27,1,27,33),(28,1,28,24),(29,1,29,11),(30,1,30,13),(31,1,31,24),(32,1,32,31),(33,1,33,32),(34,1,34,18),(35,1,35,24),(36,1,36,15),(37,1,37,36),(38,1,38,43),(39,1,39,14),(40,1,40,16),(87,3,1,8),(88,2,1,5),(89,3,2,1),(90,2,2,3),(91,3,3,1),(92,2,3,5),(93,3,4,1),(94,2,4,2),(95,3,5,1),(96,2,5,2),(97,4,2,5),(98,4,7,2),(99,4,12,4),(100,4,17,2),(101,4,22,1),(102,5,3,5),(103,5,8,3),(104,5,13,3),(105,5,18,5),(106,5,23,2),(107,6,4,5),(108,6,9,4),(109,6,14,3),(110,6,19,1),(111,6,24,1),(112,7,5,4),(113,7,10,5),(114,7,15,1),(115,7,20,5),(116,7,25,2),(118,10,56,10),(119,11,57,6),(120,12,7,5),(121,13,4,2),(122,14,58,10),(123,15,59,1);
 /*!40000 ALTER TABLE `supply_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -887,4 +887,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-25 16:04:44
+-- Dump completed on 2025-10-26  0:07:18

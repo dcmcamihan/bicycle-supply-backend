@@ -28,6 +28,7 @@ const stockoutRoutes = require('./routes/stockoutRoutes');
 const supplierAddressRoutes = require('./routes/supplierAddressRoutes');
 const supplyDetailsRoutes = require('./routes/supplyDetailsRoutes');
 const stockAdjustmentRoutes = require('./routes/stockAdjustmentRoutes');
+const stockAdjustmentDetailsRoutes = require('./routes/stockAdjustmentDetailsRoutes');
 
 const app = express();
 const cors = require('cors');
@@ -65,6 +66,7 @@ app.use('/api/stockouts', stockoutRoutes);
 app.use('/api/supplier-addresses', supplierAddressRoutes);
 app.use('/api/supply-details', supplyDetailsRoutes);
 app.use('/api/stock-adjustments', stockAdjustmentRoutes);
+app.use('/api/stock-adjustment-details', stockAdjustmentDetailsRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
