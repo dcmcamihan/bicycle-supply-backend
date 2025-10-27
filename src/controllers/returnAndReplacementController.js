@@ -125,7 +125,11 @@ exports.postReturn = async (req, res) => {
     try {
         const r = await ReturnAndReplacement.findByPk(id);
         if (!r) { await t.rollback(); return res.status(404).json({ message: 'Return not found' }); }
-        if (r.return_status !== 'APPR') { await t.rollback(); return res.status(400).json({ message: 'Return must be approved before posting' }); }
+        // Accept either the numeric sales-return Approved code or the legacy 'APPR' token
+        if (r.return_status !== '2002' && r.return_status !== 'APPR') {
+            await t.rollback();
+            return res.status(400).json({ message: 'Return must be approved before posting' });
+        }
 
         const sd = await SaleDetails.findByPk(r.sale_detail_id);
         if (!sd) { await t.rollback(); return res.status(400).json({ message: 'Sale detail not found' }); }
@@ -140,10 +144,12 @@ exports.postReturn = async (req, res) => {
             details.push({ product_id: r.replacement_product_id, quantity: -qty });
         }
 
+        // adjustment_type is an enum('return','replacement','manual') in the DB; map our action_type accordingly
+        const adjType = (r.action_type === 'replacement') ? 'replacement' : 'return';
         const header = await StockAdjustment.create({
             client_request_id: req.body?.client_request_id || null,
             return_id: r.return_id,
-            adjustment_type: r.action_type || (r.replacement_product_id ? 'replacement' : 'return'),
+            adjustment_type: adjType,
             transaction_date: new Date(),
             remarks: r.reason || r.remarks || null,
             processed_by: null
