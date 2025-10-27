@@ -34,7 +34,31 @@ exports.getSupplierAddressesBySupplier = async (req, res) => {
 
 exports.createSupplierAddress = async (req, res) => {
     try {
-        const newSupplierAddress = await SupplierAddress.create(req.body);
+        // Accept frontend-friendly field names and normalize to DB column names
+        const payload = { ...req.body };
+        // frontend uses address_line1, postal_code, state
+        if (payload.address_line1 !== undefined) {
+            payload.street = payload.address_line1;
+            delete payload.address_line1;
+        }
+        if (payload.postal_code !== undefined) {
+            payload.zip_code = payload.postal_code;
+            delete payload.postal_code;
+        }
+        if (payload.state !== undefined) {
+            payload.province = payload.state;
+            delete payload.state;
+        }
+
+        // Ensure required DB fields are present (city, country, zip_code, province)
+        // If some are missing, return a 400 with a helpful message
+        const required = ['supplier_id', 'city', 'country', 'zip_code', 'province'];
+        const missing = required.filter(k => payload[k] === undefined || payload[k] === '');
+        if (missing.length > 0) {
+            return res.status(400).json({ error: `Missing required supplier address fields: ${missing.join(', ')}` });
+        }
+
+        const newSupplierAddress = await SupplierAddress.create(payload);
         res.status(201).json(newSupplierAddress);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -43,7 +67,22 @@ exports.createSupplierAddress = async (req, res) => {
 
 exports.updateSupplierAddress = async (req, res) => {
     try {
-        const [updated] = await SupplierAddress.update(req.body, {
+        // Normalize frontend-friendly keys to DB column names for updates as well
+        const payload = { ...req.body };
+        if (payload.address_line1 !== undefined) {
+            payload.street = payload.address_line1;
+            delete payload.address_line1;
+        }
+        if (payload.postal_code !== undefined) {
+            payload.zip_code = payload.postal_code;
+            delete payload.postal_code;
+        }
+        if (payload.state !== undefined) {
+            payload.province = payload.state;
+            delete payload.state;
+        }
+
+        const [updated] = await SupplierAddress.update(payload, {
             where: { supplier_address_id: req.params.id }
         });
         if (updated) {

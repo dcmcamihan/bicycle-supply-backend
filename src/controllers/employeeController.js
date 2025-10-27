@@ -61,8 +61,26 @@ exports.getEmployeeById = async (req, res) => {
 
 exports.createEmployee = async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const newEmployee = await Employee.create({ ...req.body, password: hashedPassword });
+        // If no password provided, set a temporary default password
+        const plainPassword = req.body.password || 'ChangeMe123!';
+        const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+        // Ensure required fields with sensible defaults if missing
+        const first = (req.body.first_name || '').trim();
+        const last = (req.body.last_name || '').trim();
+        const generatedUsername = req.body.username || (`${first}.${last}`.replace(/\s+/g, '_').toLowerCase() || `user${Date.now()}`);
+        const gender = req.body.gender || 'M';
+        const employee_status = req.body.employee_status || '0001'; // default to Active
+
+        const payload = {
+            ...req.body,
+            password: hashedPassword,
+            username: generatedUsername,
+            gender,
+            employee_status
+        };
+
+        const newEmployee = await Employee.create(payload);
         res.status(201).json(newEmployee);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -99,6 +117,11 @@ exports.deleteEmployee = async (req, res) => {
             res.status(404).json({ message: 'Employee not found' });
         }
     } catch (error) {
+        // If there are dependent rows (attendances, role history, etc.) the DB will refuse
+        // the delete with a FK constraint error. Return a 409 with a helpful message.
+        if (error && error.message && error.message.includes('Cannot delete or update a parent row')) {
+            return res.status(409).json({ error: 'Employee cannot be deleted because there are dependent records (attendances, role history, etc.). Remove or reassign dependent records first.' });
+        }
         res.status(500).json({ error: error.message });
     }
 };
