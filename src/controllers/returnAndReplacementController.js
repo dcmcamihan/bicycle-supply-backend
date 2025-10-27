@@ -2,11 +2,49 @@ const ReturnAndReplacement = require('../models/returnAndReplacementModel');
 const SaleDetails = require('../models/saleDetailsModel');
 const StockAdjustment = require('../models/stockAdjustmentModel');
 const StockAdjustmentDetail = require('../models/stockAdjustmentDetailsModel');
+const { QueryTypes } = require('sequelize');
 
 exports.getAllReturnAndReplacements = async (req, res) => {
     try {
-        const returnAndReplacements = await ReturnAndReplacement.findAll();
-        res.json(returnAndReplacements);
+        // Return enriched payload joining related tables so frontend can render a full history view
+        const sql = `
+        SELECT
+            r.return_id,
+            r.sale_detail_id,
+            r.quantity,
+            r.reason,
+            r.action_type,
+            r.return_status,
+            r.transaction_date,
+            s.sale_id,
+            s.sale_date,
+            s.cashier,
+            s.manager,
+            sd.product_id AS original_product_id,
+            sd.quantity_sold AS original_quantity,
+            p.product_name AS original_product_name,
+            p.price AS original_price,
+            rp.product_id AS replacement_product_id,
+            rp.product_name AS replacement_product_name,
+            st.description AS status_description,
+            src.status_reference_code AS status_type,
+            sa.adjustment_id,
+            sa.adjustment_type,
+            sa.transaction_date AS adjustment_date,
+            sa.processed_by AS adjustment_processor
+        FROM return_and_replacement r
+        JOIN sale_details sd ON r.sale_detail_id = sd.sale_detail_id
+        JOIN sale s ON sd.sale_id = s.sale_id
+        JOIN product p ON sd.product_id = p.product_id
+        LEFT JOIN product rp ON r.replacement_product_id = rp.product_id
+        LEFT JOIN stock_adjustment sa ON sa.return_id = r.return_id
+        LEFT JOIN status st ON r.return_status = st.status_code
+        LEFT JOIN status_reference_code src ON st.status_reference_code = src.status_reference_code
+        ORDER BY r.transaction_date DESC
+        `;
+
+        const rows = await ReturnAndReplacement.sequelize.query(sql, { type: QueryTypes.SELECT });
+        res.json(rows);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -105,9 +143,9 @@ exports.postReturn = async (req, res) => {
         const header = await StockAdjustment.create({
             client_request_id: req.body?.client_request_id || null,
             return_id: r.return_id,
-            adjustment_type: r.replacement_product_id ? 'replacement' : 'return',
+            adjustment_type: r.action_type || (r.replacement_product_id ? 'replacement' : 'return'),
             transaction_date: new Date(),
-            remarks: r.remarks || null,
+            remarks: r.reason || r.remarks || null,
             processed_by: null
         }, { transaction: t });
         const rows = details.map(d => ({ adjustment_id: header.adjustment_id, product_id: d.product_id, quantity: d.quantity }));
