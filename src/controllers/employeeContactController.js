@@ -22,6 +22,16 @@ exports.getEmployeeContactById = async (req, res) => {
     }
 };
 
+exports.getEmployeeContactsByEmployee = async (req, res) => {
+    try {
+        const employeeId = req.params.id;
+        const contacts = await EmployeeContact.findAll({ where: { employee_id: employeeId } });
+        res.json(contacts);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.createEmployeeContact = async (req, res) => {
     try {
         const newEmployeeContact = await EmployeeContact.create(req.body);

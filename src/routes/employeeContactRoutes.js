@@ -4,6 +4,7 @@ const employeeContactController = require('../controllers/employeeContactControl
 
 router.get('/', employeeContactController.getAllEmployeeContacts);
 router.get('/:id', employeeContactController.getEmployeeContactById);
+router.get('/employee/:id', employeeContactController.getEmployeeContactsByEmployee);
 router.post('/', employeeContactController.createEmployeeContact);
 router.put('/:id', employeeContactController.updateEmployeeContact);
 router.delete('/:id', employeeContactController.deleteEmployeeContact);

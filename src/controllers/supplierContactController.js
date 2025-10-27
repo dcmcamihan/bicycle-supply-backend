@@ -1,8 +1,14 @@
 const SupplierContact = require('../models/supplierContactModel');
+const ContactType = require('../models/contactTypeModel');
 
 exports.getAllSupplierContacts = async (req, res) => {
     try {
-        const supplierContacts = await SupplierContact.findAll();
+        const supplierContacts = await SupplierContact.findAll({
+            include: [{
+                model: ContactType,
+                attributes: ['description']
+            }]
+        });
         res.json(supplierContacts);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -11,12 +17,32 @@ exports.getAllSupplierContacts = async (req, res) => {
 
 exports.getSupplierContactById = async (req, res) => {
     try {
-        const supplierContact = await SupplierContact.findByPk(req.params.id);
+        const supplierContact = await SupplierContact.findByPk(req.params.id, {
+            include: [{
+                model: ContactType,
+                attributes: ['description']
+            }]
+        });
         if (supplierContact) {
             res.json(supplierContact);
         } else {
             res.status(404).json({ message: 'Supplier contact not found' });
         }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getSupplierContactsBySupplier = async (req, res) => {
+    try {
+        const contacts = await SupplierContact.findAll({
+            where: { supplier_id: req.params.id },
+            include: [{
+                model: ContactType,
+                attributes: ['description']
+            }]
+        });
+        res.json(contacts);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

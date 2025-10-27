@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const SupplierContact = require('./supplierContactModel');
+const SupplierAddress = require('./supplierAddressModel');
 
 const Supplier = sequelize.define('Supplier', {
     supplier_id: {
@@ -14,6 +16,17 @@ const Supplier = sequelize.define('Supplier', {
 }, {
     tableName: 'supplier',
     timestamps: false
+});
+
+// Define associations
+Supplier.hasMany(SupplierContact, {
+    foreignKey: 'supplier_id',
+    as: 'contacts'
+});
+
+Supplier.hasMany(SupplierAddress, {
+    foreignKey: 'supplier_id',
+    as: 'addresses'
 });
 
 module.exports = Supplier;

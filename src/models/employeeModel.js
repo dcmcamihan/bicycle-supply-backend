@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const EmployeeContact = require('./employeeContactModel');
 
 const Employee = sequelize.define('Employee', {
     employee_id: {
@@ -49,6 +50,12 @@ const Employee = sequelize.define('Employee', {
 }, {
     tableName: 'employee',
     timestamps: false
+});
+
+// Associations
+Employee.hasMany(EmployeeContact, {
+    foreignKey: 'employee_id',
+    as: 'contacts'
 });
 
 module.exports = Employee;

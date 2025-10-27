@@ -22,6 +22,16 @@ exports.getEmployeeRoleHistoryById = async (req, res) => {
     }
 };
 
+exports.getRoleHistoriesByEmployee = async (req, res) => {
+    try {
+        const employeeId = req.params.id;
+        const histories = await EmployeeRoleHistory.findAll({ where: { employee_id: employeeId } });
+        res.json(histories);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.createEmployeeRoleHistory = async (req, res) => {
     try {
         const newEmployeeRoleHistory = await EmployeeRoleHistory.create(req.body);

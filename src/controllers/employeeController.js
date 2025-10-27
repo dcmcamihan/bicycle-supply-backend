@@ -1,9 +1,18 @@
 const bcrypt = require('bcrypt');
 const Employee = require('../models/employeeModel');
+const EmployeeContact = require('../models/employeeContactModel');
 
 exports.getAllEmployees = async (req, res) => {
     try {
-        const employees = await Employee.findAll();
+        const employees = await Employee.findAll({
+            include: [
+                {
+                    model: EmployeeContact,
+                    as: 'contacts',
+                    attributes: ['contact_type_code', 'contact_value', 'is_primary']
+                }
+            ]
+        });
         res.json(employees);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -31,7 +40,15 @@ exports.rehashPlaintextPasswords = async (req, res) => {
 
 exports.getEmployeeById = async (req, res) => {
     try {
-        const employee = await Employee.findByPk(req.params.id);
+        const employee = await Employee.findByPk(req.params.id, {
+            include: [
+                {
+                    model: EmployeeContact,
+                    as: 'contacts',
+                    attributes: ['contact_type_code', 'contact_value', 'is_primary']
+                }
+            ]
+        });
         if (employee) {
             res.json(employee);
         } else {

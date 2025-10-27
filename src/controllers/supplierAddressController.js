@@ -22,6 +22,16 @@ exports.getSupplierAddressById = async (req, res) => {
     }
 };
 
+exports.getSupplierAddressesBySupplier = async (req, res) => {
+    try {
+        const supplierId = req.params.id;
+        const addresses = await SupplierAddress.findAll({ where: { supplier_id: supplierId } });
+        res.json(addresses);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.createSupplierAddress = async (req, res) => {
     try {
         const newSupplierAddress = await SupplierAddress.create(req.body);
@@ -34,7 +44,7 @@ exports.createSupplierAddress = async (req, res) => {
 exports.updateSupplierAddress = async (req, res) => {
     try {
         const [updated] = await SupplierAddress.update(req.body, {
-            where: { address_id: req.params.id }
+            where: { supplier_address_id: req.params.id }
         });
         if (updated) {
             const updatedSupplierAddress = await SupplierAddress.findByPk(req.params.id);
@@ -50,7 +60,7 @@ exports.updateSupplierAddress = async (req, res) => {
 exports.deleteSupplierAddress = async (req, res) => {
     try {
         const deleted = await SupplierAddress.destroy({
-            where: { address_id: req.params.id }
+            where: { supplier_address_id: req.params.id }
         });
         if (deleted) {
             res.status(204).json();

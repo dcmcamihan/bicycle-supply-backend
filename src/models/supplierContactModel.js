@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const ContactType = require('./contactTypeModel');
 
 const SupplierContact = sequelize.define('SupplierContact', {
     supplier_contact_id: {
@@ -32,6 +33,12 @@ const SupplierContact = sequelize.define('SupplierContact', {
 }, {
     tableName: 'supplier_contact',
     timestamps: false
+});
+
+// Define association with ContactType
+SupplierContact.belongsTo(ContactType, {
+    foreignKey: 'contact_type_code',
+    targetKey: 'contact_type_code'
 });
 
 module.exports = SupplierContact;

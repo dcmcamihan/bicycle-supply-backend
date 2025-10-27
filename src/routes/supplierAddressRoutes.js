@@ -4,6 +4,7 @@ const supplierAddressController = require('../controllers/supplierAddressControl
 
 router.get('/', supplierAddressController.getAllSupplierAddresses);
 router.get('/:id', supplierAddressController.getSupplierAddressById);
+router.get('/supplier/:id', supplierAddressController.getSupplierAddressesBySupplier);
 router.post('/', supplierAddressController.createSupplierAddress);
 router.put('/:id', supplierAddressController.updateSupplierAddress);
 router.delete('/:id', supplierAddressController.deleteSupplierAddress);
