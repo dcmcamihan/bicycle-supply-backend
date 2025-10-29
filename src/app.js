@@ -68,6 +68,6 @@ app.use('/api/supply-details', supplyDetailsRoutes);
 app.use('/api/stock-adjustments', stockAdjustmentRoutes);
 app.use('/api/stock-adjustment-details', stockAdjustmentDetailsRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}`);
 });
