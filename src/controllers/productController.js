@@ -5,6 +5,8 @@ const Supply = require('../models/supplyModel');
 const Supplier = require('../models/supplierModel');
 const SupplierAddress = require('../models/supplierAddressModel');
 const SupplierContact = require('../models/supplierContactModel');
+const sequelize = require('../config/db');
+const { QueryTypes } = require('sequelize');
 
 exports.getProductQuantityOnHand = async (req, res) => {
     try {
@@ -120,6 +122,41 @@ exports.deleteProduct = async (req, res) => {
         } else {
             res.status(404).json({ message: 'Product not found' });
         }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get latest supplier for a given product based on supply_date
+exports.getLatestSupplier = async (req, res) => {
+    try {
+        const productId = Number(req.params.product_id);
+        if (!productId) return res.status(400).json({ message: 'Invalid product id' });
+
+        // Join supplies and supply_details to find the most recent supply for this product
+        const sql = `SELECT s.supplier_id, s.supply_date, s.supply_id
+                     FROM supply s
+                     JOIN supply_details sd ON s.supply_id = sd.supply_id
+                     WHERE sd.product_id = :productId
+                     ORDER BY s.supply_date DESC
+                     LIMIT 1`;
+
+        const results = await sequelize.query(sql, {
+            replacements: { productId },
+            type: QueryTypes.SELECT
+        });
+
+        if (!results || results.length === 0) return res.json(null);
+
+        const row = results[0];
+        const supplier = await Supplier.findByPk(row.supplier_id);
+
+        return res.json({
+            supplier_id: row.supplier_id,
+            supply_id: row.supply_id,
+            supply_date: row.supply_date,
+            supplier: supplier || null
+        });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -10,5 +10,6 @@ router.delete('/:id', productController.deleteProduct);
 router.put('/:id/archive', productController.archiveProduct);
 router.put('/:id/activate', productController.activateProduct);
 router.get('/:product_id/quantity-on-hand', productController.getProductQuantityOnHand);
+router.get('/:product_id/latest-supplier', productController.getLatestSupplier);
 
 module.exports = router;
