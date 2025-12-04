@@ -38,6 +38,24 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors()); // Enable CORS for all routes
 
+// Ensure CORS headers are set as early as possible. This helps ensure
+// even error responses from Express include CORS headers when possible.
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+    if (req.method === 'OPTIONS') return res.sendStatus(204);
+    next();
+});
+
+// Log and surface unhandled rejections/exceptions so platform logs show root cause
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
 app.use('/api/employees', employeeRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/products', productRoutes);
@@ -69,6 +87,14 @@ app.use('/api/supplier-addresses', supplierAddressRoutes);
 app.use('/api/supply-details', supplyDetailsRoutes);
 app.use('/api/stock-adjustments', stockAdjustmentRoutes);
 app.use('/api/stock-adjustment-details', stockAdjustmentDetailsRoutes);
+
+// Generic error handler — returns JSON and ensures CORS headers are present
+app.use((err, req, res, next) => {
+    console.error('Express error handler caught:', err && err.stack ? err.stack : err);
+    try { res.setHeader('Access-Control-Allow-Origin', '*'); } catch (e) {}
+    if (res.headersSent) return next(err);
+    res.status(500).json({ error: 'Internal server error' });
+});
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}`);
