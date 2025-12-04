@@ -101,12 +101,18 @@ exports.updateProduct = async (req, res) => {
         const [updated] = await Product.update(req.body, {
             where: { product_id: req.params.id }
         });
-        if (updated) {
-            const updatedProduct = await Product.findByPk(req.params.id);
-            res.json(updatedProduct);
-        } else {
-            res.status(404).json({ message: 'Product not found' });
+
+        // MySQL's UPDATE may report 0 affected rows when the new values
+        // are identical to the existing row. That doesn't mean the product
+        // doesn't exist. Fetch the product to determine the correct response.
+        const updatedProduct = await Product.findByPk(req.params.id);
+        if (updatedProduct) {
+            // Return the current product row (whether or not fields actually changed)
+            return res.json(updatedProduct);
         }
+
+        // If the product truly doesn't exist, return 404
+        return res.status(404).json({ message: 'Product not found' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
