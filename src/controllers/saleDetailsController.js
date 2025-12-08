@@ -49,12 +49,14 @@ exports.createSaleDetails = async (req, res) => {
             unitPrice = product && product.price ? Number(product.price) : 0;
         }
 
-        // Determine discount_amount: prefer explicitly provided amount, else compute from discount_percent
+        // Determine discount_amount: prefer explicitly provided amount (assumed to be total for the line),
+        // else compute from discount_percent as a total across quantity_sold
         let discountAmount = Number(body.discount_amount || 0);
         if (!discountAmount) {
             const pct = Number(body.discount_percent || 0);
+            const qty = Number(body.quantity_sold || 0) || 1;
             if (pct) {
-                discountAmount = Number((unitPrice * pct / 100).toFixed(2));
+                discountAmount = Number(((unitPrice * qty) * pct / 100).toFixed(2));
             } else {
                 discountAmount = 0;
             }
@@ -84,13 +86,15 @@ exports.updateSaleDetails = async (req, res) => {
         let discountAmount = Number(body.discount_amount || 0);
         if (!discountAmount) {
             const pct = Number(body.discount_percent || 0);
+            const qty = Number(body.quantity_sold || 0) || 1;
             if (pct) {
-                discountAmount = Number((unitPrice * pct / 100).toFixed(2));
+                discountAmount = Number(((unitPrice * qty) * pct / 100).toFixed(2));
             }
         }
 
-        if (unitPrice) body.unit_price = unitPrice;
-        if (discountAmount) body.discount_amount = discountAmount;
+        if (unitPrice !== undefined && unitPrice !== null) body.unit_price = unitPrice;
+        // Always set discount_amount (may be zero)
+        body.discount_amount = discountAmount;
 
         const [updated] = await SaleDetails.update(body, {
             where: { sale_detail_id: req.params.id }
@@ -109,7 +113,7 @@ exports.updateSaleDetails = async (req, res) => {
 exports.deleteSaleDetails = async (req, res) => {
     try {
         const deleted = await SaleDetails.destroy({
-            where: { sale_details_id: req.params.id }
+            where: { sale_detail_id: req.params.id }
         });
         if (deleted) {
             res.status(204).json();
